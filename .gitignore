@@ -1,0 +1,20 @@
+riderModule.iml
+/_ReSharper.Caches/
+
+# Build output (all .NET)
+**/bin/
+**/obj/
+
+# Rider/VS
+**/.idea/
+**/.vs/
+**/.vscode/
+
+# macOS
+**/.DS_Store
+
+# NuGet (valgfrit - normalt ignorer man packages/ men ikke obj's project.assets.json fordi obj er ignoreret)
+**/packages/
+
+!ocelot.*.json
+!appsettings.json
