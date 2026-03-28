@@ -1,0 +1,103 @@
+@model OAuth_OpenID_Connect_Client.Models.TokenDebugViewModel
+
+@{
+    ViewData["Title"] = "Token Debug";
+}
+
+<h1>Token response</h1>
+
+<p><strong>Token type:</strong></p>
+<p>@Model.TokenType</p>
+
+<p><strong>Expires in:</strong></p>
+<p>@Model.ExpiresIn</p>
+
+<p><strong>Scope:</strong></p>
+<p>@Model.Scope</p>
+
+<p><strong>Access token:</strong></p>
+<pre style="white-space: pre-wrap; word-break: break-all;">@Model.AccessToken</pre>
+
+<p><strong>ID token:</strong></p>
+<pre style="white-space: pre-wrap; word-break: break-all;">@Model.IdToken</pre>
+
+<p><strong>Refresh token:</strong></p>
+<pre style="white-space: pre-wrap; word-break: break-all;">@Model.RefreshToken</pre>
+
+<h2>ID token validation</h2>
+
+<p><strong>Er ID token gyldigt?</strong></p>
+<p>@(Model.IsIdTokenValid ? "Ja" : "Nej")</p>
+
+@if (!string.IsNullOrWhiteSpace(Model.IdTokenValidationError))
+{
+    <p><strong>Valideringsfejl:</strong></p>
+    <pre style="white-space: pre-wrap; word-break: break-all;">@Model.IdTokenValidationError</pre>
+}
+
+@if (Model.IdTokenClaims.Any())
+{
+    <h2>Claims fra valideret ID token</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th style="text-align:left; padding-right:20px;">Claim</th>
+            <th style="text-align:left;">Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var claim in Model.IdTokenClaims)
+        {
+            <tr>
+                <td style="vertical-align:top; padding-right:20px;">@claim.Type</td>
+                <td style="vertical-align:top;">@claim.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@if (Model.UserInfo is not null)
+{
+    <h2>UserInfo fra endpoint</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th style="text-align:left; padding-right:20px;">Felt</th>
+            <th style="text-align:left;">Værdi</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="padding-right:20px;">sub</td>
+            <td>@Model.UserInfo.Subject</td>
+        </tr>
+        <tr>
+            <td style="padding-right:20px;">preferred_username</td>
+            <td>@Model.UserInfo.PreferredUsername</td>
+        </tr>
+        <tr>
+            <td style="padding-right:20px;">email</td>
+            <td>@Model.UserInfo.Email</td>
+        </tr>
+        <tr>
+            <td style="padding-right:20px;">email_verified</td>
+            <td>@Model.UserInfo.EmailVerified</td>
+        </tr>
+        <tr>
+            <td style="padding-right:20px;">name</td>
+            <td>@Model.UserInfo.Name</td>
+        </tr>
+        <tr>
+            <td style="padding-right:20px;">given_name</td>
+            <td>@Model.UserInfo.GivenName</td>
+        </tr>
+        <tr>
+            <td style="padding-right:20px;">family_name</td>
+            <td>@Model.UserInfo.FamilyName</td>
+        </tr>
+        </tbody>
+    </table>
+}

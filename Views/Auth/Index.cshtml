@@ -1,0 +1,41 @@
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>OpenID Connect Client</h1>
+
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <p>Du er logget ind.</p>
+
+    <p>
+        <strong>Brugernavn:</strong>
+        @(User.Identity?.Name ?? User.FindFirst("preferred_username")?.Value ?? "Ukendt")
+    </p>
+
+    @if (User.FindFirst(ClaimTypes.Email) is not null)
+    {
+        <p>
+            <strong>Email:</strong>
+            @User.FindFirst(ClaimTypes.Email)!.Value
+        </p>
+    }
+
+    <p>
+        <a href="/me">Se mine claims</a>
+    </p>
+
+    <p>
+        <a href="/logout">Log ud</a>
+    </p>
+}
+else
+{
+    <p>Du er ikke logget ind.</p>
+
+    <p>
+        <a href="/login">Log ind med Keycloak</a>
+    </p>
+}

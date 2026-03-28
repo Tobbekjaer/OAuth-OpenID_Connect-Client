@@ -1,0 +1,33 @@
+@model List<System.Security.Claims.Claim>
+
+@{
+    ViewData["Title"] = "Mine claims";
+}
+
+<h1>Mine claims</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th style="text-align:left; padding-right:20px;">Claim</th>
+        <th style="text-align:left;">Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var claim in Model)
+    {
+        <tr>
+            <td style="vertical-align:top; padding-right:20px;">@claim.Type</td>
+            <td style="vertical-align:top;">@claim.Value</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<p>
+    <a href="/">Tilbage til forsiden</a>
+</p>
+
+<p>
+    <a href="/logout">Log ud</a>
+</p>
